@@ -15,7 +15,6 @@ class SignInPage extends ConsumerWidget {
     final signIn = ref.read(signInProvider);
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, //戻るボタンを消す.
         title: const Text('ログインページ'),
       ),
       body: Center(
