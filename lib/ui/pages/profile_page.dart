@@ -22,7 +22,6 @@ class ProfilePage extends ConsumerWidget {
                 },
                 icon: const Icon(Icons.edit))
           ],
-          centerTitle: true, // AndroidのAppBarの文字を中央寄せ.
           title: const Text(
             'プロフィールページ',
             style: TextStyle(color: Colors.white),
@@ -41,10 +40,10 @@ class ProfilePage extends ConsumerWidget {
                     radius: 50, //丸のサイズを調整.
                     backgroundColor: Colors.grey, // 画像が非表示の時の色を設定.
                     backgroundImage:
-                        NetworkImage(config["image"]), // imageドキュメントを取得.
+                        config != null ? NetworkImage(config["image"]) : null, // imageドキュメントを取得, nullだったらグレーの丸を表示
                   ),
                   const SizedBox(width: 20),
-                  Text(config['name']),
+                  config != null ? Text(config['name']) : const Text('プロフィールが登録されてません'),// nameドキュメントを取得, nullだったら「登録されていません」のテキストを表示
                 ],
               ),
             );

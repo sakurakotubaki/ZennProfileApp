@@ -33,7 +33,7 @@ class ProfileService {
       final uploadName = "image.png";
       final snapshot = await storageRef.ref().child("images/$uid/$uploadName");
       // 画像をStorageにuploadする処理.
-      final task = await snapshot.putFile(file);
+      final task = await snapshot.putData(await file.readAsBytes());
       final imageUrl = await snapshot.storage
           .ref()
           .child("images/$uid/$uploadName")
@@ -144,14 +144,14 @@ class ProfileService {
   // プロフィール情報を削除するメソッド.
   Future<void> deleteImage(BuildContext context) async {
     // imagesフォルダを指定して画像のURLを取得.
-      final uid = auth.currentUser?.uid ?? '';
-      final uploadName = "image.png";
-      final imageRef = storageRef.ref().child("images/$uid/$uploadName");
-      // Storageの画像を削除する.
-      final imageUrl = await imageRef.delete();
+    final uid = auth.currentUser?.uid ?? '';
+    final uploadName = "image.png";
+    final imageRef = storageRef.ref().child("images/$uid/$uploadName");
+    // Storageの画像を削除する.
+    final imageUrl = await imageRef.delete();
 
-      // FireStoreのデータを削除する.
-      final user = auth.currentUser;
-      db.collection('profile').doc(uid).delete();
+    // FireStoreのデータを削除する.
+    final user = auth.currentUser;
+    db.collection('profile').doc(uid).delete();
   }
 }
